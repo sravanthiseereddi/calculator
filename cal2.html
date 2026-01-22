@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            background:#ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .calculator {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 260px;
+        }
+
+        .display {
+            width: 240px;
+            height: 50px;
+            font-size: 20px;
+            text-align: right;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            height: 50px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #cf95a3;
+        }
+        button:hover {
+            background: rgb(255, 105, 180);
+            color: white;
+        }
+
+        button:active {
+            transform: scale(0,95);
+        }
+        .operator:hover {
+            background:rgb(255, 105, 180)
+        }
+        .clear {
+            background: #ff6f91;
+            color: white;
+        }
+        .clear:hover {
+            background: bisque;
+        }
+
+        .equals {
+            background: #ccc;
+            color: aquamarine;
+        }
+
+        .equals:hover {
+            background: #ff6f91;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="display" id="display">0</div>
+
+    <div class="buttons">
+        <button class="clear" onclick="clearDisplay()">C</button>
+        <button onclick="deleteLast()">DEL</button>
+        <button class="operator" onclick="setOperation('divide')">/</button>
+        <button class="operator" onclick="setOperation('multiply')">x</button>
+
+        <button onclick="appendNumber('7')">7</button>
+        <button onclick="appendNumber('8')">8</button>
+        <button onclick="appendNumber('9')">9</button>
+        <button class="operator" onclick="setOperation('subtract')">-</button>
+
+        <button onclick="appendNumber('4')">4</button>
+        <button onclick="appendNumber('5')">5</button>
+        <button onclick="appendNumber('6')">6</button>
+        <button class="operator" onclick="setOperation('add')">+</button>
+
+        <button onclick="appendNumber('1')">1</button>
+        <button onclick="appendNumber('2')">2</button>
+        <button onclick="appendNumber('3')">3</button>
+        <button onclick="append('%')">%</button>
+
+        <button onclick="appendNumber('0')">0</button>
+        <button onclick="append('.')">.</button>
+        <button class="equal" onclick="calculate()">=</button>
+    </div>
+</div>
+
+<script>
+    let currentdisplay = '0';
+    let firstNumber = null;
+    let operation = null;
+    let shouldResetDisplay = false;
+    function UpdateDisplay() {
+     document.getElementById("display").textcontent = currentdisplay;
+    }
+    function appendNumber(num) {
+        if(shouldResetDisplay){
+            currentDisplay = num;
+            shouldResetDisplay = false;
+        }else {
+            if(currentDisplay === '0' && num !== '.') {
+                currentDisplay = num;
+            } else {
+                currentDisplay += num;
+            }
+        }
+        UpdateDisplay();
+        
+    }
+
+    function clearDisplay() {
+        currentdisplay ='0';
+        firstname = null;
+        operation = null;
+        shouldResetDisplay = false;
+        UpdateDisplay();
+    }
+
+    function deleteLast() {
+        if(firstNumber !== null &&operation !== null && !shouldResetDisplay){
+            calculate();
+        }
+        firstNumber = parseFloat(currentDisplay)
+            operation = op;
+            shouldResetDisplay = true;
+        
+    }
+
+    function add(a,b){
+        return a + b;
+    }
+        function subtract(a,b){
+        return a - b;
+    }
+        function multiply(a,b){
+        return a * b;
+    }
+        function divide(a,b){
+        if (b === 0) {
+            return 'error';
+        }
+        return a/b;
+    }
+    function calculate() {
+
+        if(firstNumber === null || operation === null){
+
+            return;
+        }
+        let secondNumber = parseFloat(currentDisplay);
+        let result;
+        if(operation === 'add'){
+
+            result = add(firstNumber, secondNumber);
+        }
+        
+        else if(operation === 'subtract'){
+            result = subtract(firstNumber, secondNumber);
+        }
+
+        else if(operation === 'multiply'){
+            result = subtract(firstNumber, secondNumber);
+
+
+        }
+        else if(operation === 'divide'){
+            result = divide(firstNumber, secondNumber);
+        }
+        if(result = 'Error'){
+
+            currentDisplay = 'Error';
+        }
+        else {
+
+            currentDisplay = result.toString();
+        }
+        firstNumber = null;
+        operation = null;
+        shouldResetDisplay = true;
+        UpdateDisplay();
+    }
+    
+</script>
+
+</body>
+</html>
